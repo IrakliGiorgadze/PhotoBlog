@@ -8,8 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-
-
 func main() {
 	staticC := controllers.NewStatic()
 	usersC := controllers.NewUsers()
