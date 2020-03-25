@@ -1,16 +1,35 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"Study/Web_Applications/PhotoBlog/controllers"
+	"Study/Web_Applications/PhotoBlog/models"
 
 	"github.com/gorilla/mux"
 )
 
+const (
+	host     = "172.30.1.147"
+	port     = 5432
+	user     = "dev"
+	password = "dev69"
+	dbname   = "photo_blog_dev"
+)
+
 func main() {
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+
+	us, err := models.NewUserService(psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer us.Close()
+
 	staticC := controllers.NewStatic()
-	usersC := controllers.NewUsers()
+	usersC := controllers.NewUsers(us)
 
 	r := mux.NewRouter()
 
@@ -20,6 +39,7 @@ func main() {
 	r.HandleFunc("/signup", usersC.New).Methods("GET")
 	r.HandleFunc("/signup", usersC.Create).Methods("POST")
 
+	fmt.Println("starting server on :8080 ...")
 	http.ListenAndServe(":8080", r)
 }
 
