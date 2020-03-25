@@ -23,10 +23,11 @@ func main() {
 		host, port, user, password, dbname)
 
 	us, err := models.NewUserService(psqlInfo)
-	if err != nil {
-		panic(err)
-	}
+	must(err)
 	defer us.Close()
+
+	//us.DestructiveReset()
+	us.AutoMigrate()
 
 	staticC := controllers.NewStatic()
 	usersC := controllers.NewUsers(us)
