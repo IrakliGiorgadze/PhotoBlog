@@ -3,6 +3,8 @@ package models
 import (
 	"errors"
 
+	"golang.org/x/crypto/bcrypt"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -11,6 +13,8 @@ var (
 	ErrNotFound  = errors.New("models: resource not found")
 	ErrInvalidID = errors.New("models: ID provided was invalid")
 )
+
+const userPwPepper = "bidzinas-dedas-sheveci"
 
 func NewUserService(connectionInfo string) (*UserService, error) {
 	db, err := gorm.Open("postgres", connectionInfo)
@@ -48,6 +52,13 @@ func first(db *gorm.DB, dst interface{}) error {
 }
 
 func (us *UserService) Create(user *User) error {
+	pwBytes := []byte(user.Password + userPwPepper)
+	hashedBytes, err := bcrypt.GenerateFromPassword(pwBytes, bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.PasswordHash = string(hashedBytes)
+	user.Password = ""
 	return us.db.Create(user).Error
 }
 
@@ -87,6 +98,8 @@ func (us *UserService) AutoMigrate() error {
 
 type User struct {
 	gorm.Model
-	Name  string `gorm:"not null,unique_index"`
-	Email string `gorm:"not null,unique_index"`
+	Name         string `gorm:"not null,unique_index"`
+	Email        string `gorm:"not null,unique_index"`
+	Password     string `gorm:"-"`
+	PasswordHash string `gorm:"not null"`
 }
