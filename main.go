@@ -26,7 +26,7 @@ func main() {
 	must(err)
 	defer us.Close()
 
-	us.DestructiveReset()
+	//us.DestructiveReset()
 	us.AutoMigrate()
 
 	staticC := controllers.NewStatic()
@@ -43,6 +43,8 @@ func main() {
 
 	r.Handle("/login", usersC.LoginView).Methods("GET")
 	r.HandleFunc("/login", usersC.Login).Methods("POST")
+
+	r.HandleFunc("/ct", usersC.CookieTest).Methods("GET")
 
 	fmt.Println("starting server on :8080 ...")
 	http.ListenAndServe(":8080", r)
