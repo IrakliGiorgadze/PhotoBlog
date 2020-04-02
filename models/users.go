@@ -3,6 +3,8 @@ package models
 import (
 	"errors"
 
+	"Study/Web_Applications/PhotoBlog/hash"
+
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/jinzhu/gorm"
@@ -15,7 +17,10 @@ var (
 	ErrInvalidPassword = errors.New("models: password provided was invalid")
 )
 
-const userPwPepper = "bidzinas-dedas-sheveci"
+const (
+	userPwPepper  = "bidzinas-dedas-sheveci"
+	hmacSecretKey = "nu-daatrev-am-xeebs-ylesavit"
+)
 
 func NewUserService(connectionInfo string) (*UserService, error) {
 	db, err := gorm.Open("postgres", connectionInfo)
@@ -23,11 +28,16 @@ func NewUserService(connectionInfo string) (*UserService, error) {
 		return nil, err
 	}
 	//db.LogMode(true)
-	return &UserService{db: db}, nil
+	hmac := hash.NewHMAC(hmacSecretKey)
+	return &UserService{
+		db:   db,
+		hmac: hmac,
+	}, nil
 }
 
 type UserService struct {
-	db *gorm.DB
+	db   *gorm.DB
+	hmac hash.HMAC
 }
 
 func (us *UserService) ByID(id uint) (*User, error) {
@@ -121,4 +131,6 @@ type User struct {
 	Email        string `gorm:"not null,unique_index"`
 	Password     string `gorm:"-"`
 	PasswordHash string `gorm:"not null"`
+	Remember     string `gorm:"-"`
+	RememberHash string `gorm:"not null,unique_index"`
 }
