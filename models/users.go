@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"Study/Web_Applications/PhotoBlog/hash"
+	"Study/Web_Applications/PhotoBlog/rand"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -54,6 +55,16 @@ func (us *UserService) ByEmail(email string) (*User, error) {
 	return &user, err
 }
 
+func (us *UserService) ByRemember(token string) (*User, error) {
+	var user User
+	rememberHash := us.hmac.Hash(token)
+	err := first(us.db.Where("remember_hash = ?", rememberHash), &user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
 func (us *UserService) Authenticate(email, password string) (*User, error) {
 	foundUser, err := us.ByEmail(email)
 	if err != nil {
@@ -88,10 +99,21 @@ func (us *UserService) Create(user *User) error {
 	}
 	user.PasswordHash = string(hashedBytes)
 	user.Password = ""
+	if user.Remember == "" {
+		token, err := rand.RememberToken()
+		if err != nil {
+			return err
+		}
+		user.Remember = token
+	}
+	user.RememberHash = us.hmac.Hash(user.Remember)
 	return us.db.Create(user).Error
 }
 
 func (us *UserService) Update(user *User) error {
+	if user.Remember != "" {
+		user.RememberHash = us.hmac.Hash(user.Remember)
+	}
 	return us.db.Save(user).Error
 }
 
