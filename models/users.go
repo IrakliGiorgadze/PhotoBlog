@@ -65,6 +65,8 @@ func NewUserService(connectionInfo string) (UserService, error) {
 	}, nil
 }
 
+var _ UserService = &userService{}
+
 type userService struct {
 	UserDB
 }
