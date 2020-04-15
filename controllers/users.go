@@ -17,12 +17,6 @@ func NewUsers(us models.UserService) *Users {
 	}
 }
 
-type SignupForm struct {
-	Name     string `schema:"name"`
-	Email    string `schema:"email"`
-	Password string `schema:"password"`
-}
-
 type Users struct {
 	NewView   *views.View
 	LoginView *views.View
@@ -33,6 +27,12 @@ func (u *Users) New(w http.ResponseWriter, r *http.Request) {
 	if err := u.NewView.Render(w, nil); err != nil {
 		panic(err)
 	}
+}
+
+type SignupForm struct {
+	Name     string `schema:"name"`
+	Email    string `schema:"email"`
+	Password string `schema:"password"`
 }
 
 func (u *Users) Create(w http.ResponseWriter, r *http.Request) {
