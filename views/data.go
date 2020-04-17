@@ -7,6 +7,10 @@ const (
 	AlertLvlSuccess = "success"
 )
 
+const (
+	AlertMsgGeneric = "Something went wrong, please try again"
+)
+
 type Alert struct {
 	Level   string
 	Message string
