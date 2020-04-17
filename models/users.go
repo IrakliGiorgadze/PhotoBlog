@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"regexp"
 	"strings"
 
@@ -12,19 +11,6 @@ import (
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-)
-
-var (
-	ErrNotFound          = errors.New("models: resource not found")
-	ErrIDInvalid         = errors.New("models: ID provided was invalid")
-	ErrPasswordIncorrect = errors.New("models: password provided was invalid")
-	ErrEmailRequired     = errors.New("models: email address is required")
-	ErrEmailInvalid      = errors.New("models: email format is not valid")
-	ErrEmailTaken        = errors.New("models: email address is already taken")
-	ErrPasswordRequired  = errors.New("models: password is required")
-	ErrRememberRequired  = errors.New("models: remember token is required")
-	ErrPasswordToShort   = errors.New("models: password must be at least 8 characters long")
-	ErrRememberToShort   = errors.New("models: remember token must be at least 32 bytes")
 )
 
 const (
