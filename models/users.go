@@ -311,7 +311,7 @@ func newUserGorm(connectionInfo string) (*userGorm, error) {
 	if err != nil {
 		return nil, err
 	}
-	//db.LogMode(true)
+	db.LogMode(false)
 	return &userGorm{
 		db: db,
 	}, nil
