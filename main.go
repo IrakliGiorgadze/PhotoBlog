@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"Study/Web_Applications/PhotoBlog/controllers"
+	"Study/Web_Applications/PhotoBlog/middleware"
 	"Study/Web_Applications/PhotoBlog/models"
 
 	"github.com/gorilla/mux"
@@ -33,6 +34,10 @@ func main() {
 	usersC := controllers.NewUsers(services.User)
 	galleriesC := controllers.NewGalleries(services.Gallery)
 
+	requireUserMw := middleware.RequireUser{
+		UserService: services.User,
+	}
+
 	r := mux.NewRouter()
 
 	r.Handle("/", staticC.Home).Methods("GET")
@@ -47,8 +52,8 @@ func main() {
 
 	r.HandleFunc("/ct", usersC.CookieTest).Methods("GET")
 
-	r.Handle("/galleries/new", galleriesC.New).Methods("GET")
-	r.HandleFunc("/galleries", galleriesC.Create).Methods("POST")
+	r.Handle("/galleries/new", requireUserMw.Apply(galleriesC.New)).Methods("GET")
+	r.HandleFunc("/galleries", requireUserMw.ApplyFn(galleriesC.Create)).Methods("POST")
 
 	fmt.Println("starting server on :8080 ...")
 	http.ListenAndServe(":8080", r)
