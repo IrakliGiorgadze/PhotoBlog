@@ -30,15 +30,15 @@ func main() {
 	services.AutoMigrate()
 	//services.DestructiveReset()
 
+	r := mux.NewRouter()
+
 	staticC := controllers.NewStatic()
 	usersC := controllers.NewUsers(services.User)
-	galleriesC := controllers.NewGalleries(services.Gallery)
+	galleriesC := controllers.NewGalleries(services.Gallery, r)
 
 	requireUserMw := middleware.RequireUser{
 		UserService: services.User,
 	}
-
-	r := mux.NewRouter()
 
 	r.Handle("/", staticC.Home).Methods("GET")
 
@@ -52,8 +52,13 @@ func main() {
 
 	r.HandleFunc("/ct", usersC.CookieTest).Methods("GET")
 
-	r.Handle("/galleries/new", requireUserMw.Apply(galleriesC.New)).Methods("GET")
-	r.HandleFunc("/galleries", requireUserMw.ApplyFn(galleriesC.Create)).Methods("POST")
+	r.Handle("/galleries/new",
+		requireUserMw.Apply(galleriesC.New)).Methods("GET")
+	r.HandleFunc("/galleries",
+		requireUserMw.ApplyFn(galleriesC.Create)).Methods("POST")
+
+	r.HandleFunc("/galleries/{id:[0-9]+}",
+		galleriesC.Show).Methods("GET").Name(controllers.ShowGallery)
 
 	fmt.Println("starting server on :8080 ...")
 	http.ListenAndServe(":8080", r)
