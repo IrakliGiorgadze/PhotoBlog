@@ -1,0 +1,45 @@
+{{define "yield"}}
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    {{range .}}
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>View</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">{{.ID}}</th>
+                        <td>{{.Title}}</td>
+                        <td>
+                            <a href="/galleries/{{.ID}}">
+                                View
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/galleries/{{.ID}}/edit">
+                                Edit
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/galleries/{{.ID}}/delete">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+            <a href="/galleries/new" class="btn btn-primary">
+                New Gallery
+            </a>
+        </div>
+    </div>
+
+{{end}}
