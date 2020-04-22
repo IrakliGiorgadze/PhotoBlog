@@ -4,7 +4,6 @@
         <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
-                    {{range .}}
                     <tr>
                         <th>#</th>
                         <th>Title</th>
@@ -14,6 +13,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{range .}}
                     <tr>
                         <th scope="row">{{.ID}}</th>
                         <td>{{.Title}}</td>
