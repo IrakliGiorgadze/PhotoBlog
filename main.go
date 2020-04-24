@@ -36,8 +36,11 @@ func main() {
 	usersC := controllers.NewUsers(services.User)
 	galleriesC := controllers.NewGalleries(services.Gallery, r)
 
-	requireUserMw := middleware.RequireUser{
+	userMw := middleware.User{
 		UserService: services.User,
+	}
+	requireUserMw := middleware.RequireUser{
+		User: userMw,
 	}
 
 	r.Handle("/", staticC.Home).Methods("GET")
@@ -49,8 +52,6 @@ func main() {
 
 	r.Handle("/login", usersC.LoginView).Methods("GET")
 	r.HandleFunc("/login", usersC.Login).Methods("POST")
-
-	r.HandleFunc("/ct", usersC.CookieTest).Methods("GET")
 
 	r.Handle("/galleries",
 		requireUserMw.ApplyFn(galleriesC.Index)).Methods("GET")
@@ -69,7 +70,7 @@ func main() {
 		galleriesC.Show).Methods("GET").Name(controllers.ShowGallery)
 
 	fmt.Println("starting server on :8080 ...")
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":8080", userMw.Apply(r))
 }
 
 func must(err error) {
