@@ -75,7 +75,6 @@ func (g *Galleries) Edit(w http.ResponseWriter, r *http.Request) {
 	}
 	var vd views.Data
 	vd.Yield = gallery
-	vd.User = user
 	g.EditView.Render(w, r, vd)
 }
 
