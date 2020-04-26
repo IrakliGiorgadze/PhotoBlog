@@ -66,6 +66,9 @@ func main() {
 	r.HandleFunc("/galleries/{id:[0-9]+}/delete",
 		requireUserMw.ApplyFn(galleriesC.Delete)).Methods("POST")
 
+	r.HandleFunc("/galleries/{id:[0-9]+}/images",
+		requireUserMw.ApplyFn(galleriesC.ImageUpload)).Methods("POST")
+
 	r.HandleFunc("/galleries/{id:[0-9]+}",
 		galleriesC.Show).Methods("GET").Name(controllers.ShowGallery)
 
