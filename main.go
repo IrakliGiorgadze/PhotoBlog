@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	host     = "172.30.1.147"
+	host     = "192.168.0.107"
 	port     = 5432
 	user     = "dev"
 	password = "dev69"
@@ -34,7 +34,7 @@ func main() {
 
 	staticC := controllers.NewStatic()
 	usersC := controllers.NewUsers(services.User)
-	galleriesC := controllers.NewGalleries(services.Gallery, r)
+	galleriesC := controllers.NewGalleries(services.Gallery, services.Image, r)
 
 	userMw := middleware.User{
 		UserService: services.User,
@@ -72,7 +72,7 @@ func main() {
 	r.HandleFunc("/galleries/{id:[0-9]+}",
 		galleriesC.Show).Methods("GET").Name(controllers.ShowGallery)
 
-	fmt.Println("starting server on :8080 ...")
+	fmt.Println("starting server on port :8080 ...")
 	http.ListenAndServe(":8080", userMw.Apply(r))
 }
 
