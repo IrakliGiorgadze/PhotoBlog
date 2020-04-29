@@ -83,7 +83,13 @@
 
 {{define "galleryImages"}}
 
-
+    <ul>
+        {{range .Images}}
+            <li>
+                {{.}}
+            </li>
+        {{end}}
+    </ul>
 
 {{end}}
 
