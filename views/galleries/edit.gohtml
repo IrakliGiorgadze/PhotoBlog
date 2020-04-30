@@ -4,7 +4,7 @@
         <div class="col-md-10 col-md-offset-1">
             <h2>Edit your gallery</h2>
             <a href="/galleries/{{.ID}}">
-                Show Gallery
+                View this gallery
             </a>
             <hr>
         </div>
@@ -83,13 +83,21 @@
 
 {{define "galleryImages"}}
 
-    <ul>
-        {{range .Images}}
-            <li>
-                {{.}}
-            </li>
-        {{end}}
-    </ul>
+    {{range .ImagesSplitN 6}}
+        <div class="col-md-2">
+            {{range .}}
+                <a href="{{.}}">
+                    <img src="{{.}}" class="thumbnail">
+                </a>
+            {{end}}
+        </div>
+    {{end}}
+
+    <style>
+        .thumbnail {
+            width: 100%;
+        }
+    </style>
 
 {{end}}
 
