@@ -4,13 +4,13 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">დაგავიწყდათ პაროლი?</h3>
+                    <h3 class="panel-title">Forget your password?</h3>
                 </div>
                 <div class="panel-body">
                     {{template "forgotPwForm" .}}
                 </div>
                 <div class="panel-footer">
-                    <a href="/login">გაიარეთ ავტორიზაცია მომხმარებლის არსებობის შემთხვევაში</a>
+                    <a href="/login">or Log In</a>
                 </div>
             </div>
         </div>
@@ -23,10 +23,10 @@
     <form action="/forgot" method="POST">
         {{csrfField}}
         <div class="form-group">
-            <label for="email">ელ. ფოსტა</label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="ai@jarvis.ge" value="{{.Email}}">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="elon@spacex.com" value="{{.Email}}">
         </div>
-        <button type="submit" class="btn btn-primary">აღდგენა</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 {{end}}

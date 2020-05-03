@@ -6,9 +6,9 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>გალერეა</th>
-                        <th>ჩვენება</th>
-                        <th>ჩასწორება</th>
+                        <th>Title</th>
+                        <th>View</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17,16 +17,16 @@
                         <th scope="row">{{.ID}}</th>
                         <td>{{.Title}}</td>
                         <td>
-                            <a href="./galleries/{{.ID}}">სრულად ნახვა</a>
+                            <a href="./galleries/{{.ID}}">View</a>
                         </td>
                         <td>
-                            <a href="./galleries/{{.ID}}/edit">ჩასწორება</a>
+                            <a href="./galleries/{{.ID}}/edit">Edit</a>
                         </td>
                     </tr>
                     {{end}}
                 </tbody>
             </table>
-            <a href="./galleries/new" class="btn btn-primary pull-right">ახალი გალერეა</a>
+            <a href="./galleries/new" class="btn btn-primary pull-right">New Gallery</a>
         </div>
     </div>
 

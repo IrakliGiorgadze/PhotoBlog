@@ -4,13 +4,13 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">აღადგინეთ პაროლი</h3>
+                    <h3 class="panel-title">Reset Your Password</h3>
                 </div>
                 <div class="panel-body">
                     {{template "resetPwForm" .}}
                 </div>
                 <div class="panel-footer">
-                    <a href="/forgot">მომხმარებლის აღდგენა</a>
+                    <a href="/forgot">Need To request a new token?</a>
                 </div>
             </div>
         </div>
@@ -24,13 +24,13 @@
         {{csrfField}}
         <div class="form-group">
             <label for="token">Reset Token</label>
-            <input type="text" name="token" class="form-control" id="token" placeholder="გთხოვთ შეიყვანოთ თოქენი" value="{{.Token}}">
+            <input type="text" name="token" class="form-control" id="token" placeholder="You will recieve token via email" value="{{.Token}}">
         </div>
         <div class="form-group">
-            <label for="password">პაროლი</label>
+            <label for="password">Password</label>
             <input type="password" name="password" class="form-control" id="password" placeholder="********">
         </div>
-        <button type="submit" class="btn btn-primary">დადასტურება</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 {{end}}
