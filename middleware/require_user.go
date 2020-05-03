@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"../context"
-	"../models"
+	"PhotoBlog/context"
+	"PhotoBlog/models"
 )
 
 type User struct {

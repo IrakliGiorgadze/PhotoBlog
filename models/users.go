@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"../hash"
-	"../rand"
+	"PhotoBlog/hash"
+	"PhotoBlog/rand"
 
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"

@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"../context"
-	"../models"
-	"../views"
+	"PhotoBlog/context"
+	"PhotoBlog/models"
+	"PhotoBlog/views"
 
 	"github.com/gorilla/mux"
 )

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"../models"
+	"PhotoBlog/models"
 )
 
 const (

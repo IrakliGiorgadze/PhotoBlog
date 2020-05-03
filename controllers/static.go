@@ -1,6 +1,6 @@
 package controllers
 
-import "../views"
+import "PhotoBlog/views"
 
 func NewStatic() *Static {
 	return &Static{

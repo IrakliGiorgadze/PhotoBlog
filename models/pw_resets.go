@@ -1,8 +1,8 @@
 package models
 
 import (
-	"../hash"
-	"../rand"
+	"PhotoBlog/hash"
+	"PhotoBlog/rand"
 
 	"github.com/jinzhu/gorm"
 )

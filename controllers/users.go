@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"../context"
-	"../email"
-	"../models"
-	"../rand"
-	"../views"
+	"PhotoBlog/context"
+	"PhotoBlog/email"
+	"PhotoBlog/models"
+	"PhotoBlog/rand"
+	"PhotoBlog/views"
 )
 
 type Users struct {
