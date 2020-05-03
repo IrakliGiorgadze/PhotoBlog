@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"Study/Web_Applications/PhotoBlog/context"
+	"../context"
 
 	"github.com/gorilla/csrf"
 	"github.com/pkg/errors"

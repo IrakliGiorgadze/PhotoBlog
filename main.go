@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"Study/Web_Applications/PhotoBlog/controllers"
-	"Study/Web_Applications/PhotoBlog/email"
-	"Study/Web_Applications/PhotoBlog/middleware"
-	"Study/Web_Applications/PhotoBlog/models"
-	"Study/Web_Applications/PhotoBlog/rand"
+	"./controllers"
+	"./email"
+	"./middleware"
+	"./models"
+	"./rand"
 
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
