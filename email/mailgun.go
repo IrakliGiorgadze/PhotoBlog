@@ -2,8 +2,9 @@ package email
 
 import (
 	"fmt"
-	"gopkg.in/mailgun/mailgun-go.v1"
 	"net/url"
+
+	"gopkg.in/mailgun/mailgun-go.v1"
 )
 
 const (

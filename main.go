@@ -38,7 +38,7 @@ func main() {
 	emailer := email.NewClient(
 		email.WithSender("jarvis.ge", "ai@sandboxe83804ac69bf46a88f406b0194c11ed8.mailgun.org"),
 		email.WithMailgun(mgCfg.Domain, mgCfg.APIKey, mgCfg.PublicAPIKey),
-		)
+	)
 
 	r := mux.NewRouter()
 	staticC := controllers.NewStatic()

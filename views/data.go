@@ -1,10 +1,11 @@
 package views
 
 import (
-	"../models"
 	"html/template"
 	"net/http"
 	"time"
+
+	"../models"
 )
 
 const (

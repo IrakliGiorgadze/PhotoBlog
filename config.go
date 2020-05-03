@@ -58,7 +58,7 @@ func (c Config) IsProd() bool {
 
 func DefaultConfig() Config {
 	return Config{
-		Port:     3000,
+		Port:     8080,
 		Env:      "dev",
 		Pepper:   "fucking-bidzina-ivanishvili",
 		HMACKey:  "bidzinas-dedas-sheveci",

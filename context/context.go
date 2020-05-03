@@ -3,7 +3,7 @@ package context
 import (
 	"context"
 
-	"Study/Web_Applications/PhotoBlog/models"
+	"../models"
 )
 
 const (
