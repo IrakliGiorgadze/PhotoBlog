@@ -1,13 +1,13 @@
 {{define "yield"}}
 
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">ავტორიზაცია</h3>
+                    <h3 class="panel-title">აღადგინეთ პაროლი</h3>
                 </div>
                 <div class="panel-body">
-                    {{template "loginForm"}}
+                    {{template "resetPwForm" .}}
                 </div>
                 <div class="panel-footer">
                     <a href="/forgot">მომხმარებლის აღდგენა</a>
@@ -18,19 +18,19 @@
 
 {{end}}
 
-{{define "loginForm"}}
+{{define "resetPwForm"}}
 
-    <form action="/login" method="POST">
+    <form action="/reset" method="POST">
         {{csrfField}}
         <div class="form-group">
-            <label for="email">ელ. ფოსტა</label>
-            <input type="email" name="email" class="form-control" id="email" placeholder="ai@jarvis.ge">
+            <label for="token">Reset Token</label>
+            <input type="text" name="token" class="form-control" id="token" placeholder="გთხოვთ შეიყვანოთ თოქენი" value="{{.Token}}">
         </div>
         <div class="form-group">
             <label for="password">პაროლი</label>
             <input type="password" name="password" class="form-control" id="password" placeholder="********">
         </div>
-        <button type="submit" class="btn btn-primary">ავტორიზაცია</button>
+        <button type="submit" class="btn btn-primary">დადასტურება</button>
     </form>
 
 {{end}}

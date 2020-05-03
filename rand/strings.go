@@ -27,7 +27,7 @@ func NBytes(base64String string) (int, error) {
 func String(nBytes int) (string, error) {
 	b, err := Bytes(nBytes)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 	return base64.URLEncoding.EncodeToString(b), nil
 }

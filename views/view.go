@@ -4,25 +4,37 @@ import (
 	"bytes"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 	"path/filepath"
 
 	"Study/Web_Applications/PhotoBlog/context"
+
+	"github.com/gorilla/csrf"
+	"github.com/pkg/errors"
 )
 
 var (
 	LayoutDir   string = "views/layouts/"
-	TemplateDir string = "views/"
+	templateDir string = "views/"
 	TemplateExt string = ".gohtml"
 )
 
+type View struct {
+	Template *template.Template
+	Layout   string
+}
+
 func NewView(layout string, files ...string) *View {
-	addTemplateExt(files)
 	addTemplatePath(files)
+	addTemplateExt(files)
 
 	files = append(files, layoutFiles()...)
-
-	t, err := template.ParseFiles(files...)
+	t, err := template.New("").Funcs(template.FuncMap{
+		"csrfField": func() (template.HTML, error) {
+			return "", errors.New("csrfField is not implemented")
+		},
+	}).ParseFiles(files...)
 	if err != nil {
 		panic(err)
 	}
@@ -31,11 +43,6 @@ func NewView(layout string, files ...string) *View {
 		Template: t,
 		Layout:   layout,
 	}
-}
-
-type View struct {
-	Template *template.Template
-	Layout   string
 }
 
 func (v *View) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -53,11 +60,21 @@ func (v *View) Render(w http.ResponseWriter, r *http.Request, data interface{}) 
 			Yield: data,
 		}
 	}
+	if alert := getAlert(r); alert != nil {
+		vd.Alert = alert
+		clearAlert(w)
+	}
 	vd.User = context.User(r.Context())
 	var buf bytes.Buffer
-	if err := v.Template.ExecuteTemplate(&buf, v.Layout, vd); err != nil {
-		http.Error(w, "Something went wrong. If the problem persists, "+
-			"please email me: ika.giorgadze@gmail.com", http.StatusInternalServerError)
+	csrfField := csrf.TemplateField(r)
+	tpl := v.Template.Funcs(template.FuncMap{
+		"csrfField": func() template.HTML {
+			return csrfField
+		},
+	})
+	if err := tpl.ExecuteTemplate(&buf, v.Layout, vd); err != nil {
+		log.Println(err)
+		http.Error(w, "<h1>Something went wrong, please do not contact us</h1>", http.StatusInternalServerError)
 		return
 	}
 	io.Copy(w, &buf)
@@ -73,7 +90,7 @@ func layoutFiles() []string {
 
 func addTemplatePath(files []string) {
 	for i, f := range files {
-		files[i] = TemplateDir + f
+		files[i] = templateDir + f
 	}
 }
 

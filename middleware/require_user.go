@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"strings"
 
 	"Study/Web_Applications/PhotoBlog/context"
 	"Study/Web_Applications/PhotoBlog/models"
@@ -11,12 +12,23 @@ type User struct {
 	models.UserService
 }
 
+type RequireUser struct {
+	User
+}
+
 func (mw *User) Apply(next http.Handler) http.HandlerFunc {
 	return mw.ApplyFn(next.ServeHTTP)
 }
 
 func (mw *User) ApplyFn(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		path := r.URL.Path
+		if strings.HasPrefix(path, "/assets/") ||
+			strings.HasPrefix(path, "/images/") {
+			next(w, r)
+			return
+		}
+
 		cookie, err := r.Cookie("remember_token")
 		if err != nil {
 			next(w, r)
@@ -32,10 +44,6 @@ func (mw *User) ApplyFn(next http.HandlerFunc) http.HandlerFunc {
 		r = r.WithContext(ctx)
 		next(w, r)
 	})
-}
-
-type RequireUser struct {
-	User
 }
 
 func (mw *RequireUser) Apply(next http.Handler) http.HandlerFunc {

@@ -5,11 +5,10 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>View</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>ID</th>
+                        <th>გალერეა</th>
+                        <th>ჩვენება</th>
+                        <th>ჩასწორება</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,27 +17,16 @@
                         <th scope="row">{{.ID}}</th>
                         <td>{{.Title}}</td>
                         <td>
-                            <a href="/galleries/{{.ID}}">
-                                View
-                            </a>
+                            <a href="./galleries/{{.ID}}">სრულად ნახვა</a>
                         </td>
                         <td>
-                            <a href="/galleries/{{.ID}}/edit">
-                                Edit
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/galleries/{{.ID}}/delete">
-                                Delete
-                            </a>
+                            <a href="./galleries/{{.ID}}/edit">ჩასწორება</a>
                         </td>
                     </tr>
                     {{end}}
                 </tbody>
             </table>
-            <a href="/galleries/new" class="btn btn-primary">
-                New Gallery
-            </a>
+            <a href="./galleries/new" class="btn btn-primary pull-right">ახალი გალერეა</a>
         </div>
     </div>
 

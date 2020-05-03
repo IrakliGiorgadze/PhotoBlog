@@ -2,9 +2,9 @@
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h2>Edit your gallery</h2>
+            <h2>გალერიის კორექტირება</h2>
             <a href="/galleries/{{.ID}}">
-                View this gallery
+                გალერიის ნახვა
             </a>
             <hr>
         </div>
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-1">
             <label class="control-label pull-right">
-                Images
+                ფოტოები
             </label>
         </div>
         <div class="col-md-10">
@@ -40,14 +40,14 @@
 {{define "editGalleryForm"}}
 
     <form action="/galleries/{{.ID}}/update" method="POST" class="form-horizontal">
+        {{csrfField}}
         <div class="form-group">
-            <label for="title" class="col-md-1 control-label">Title</label>
+            <label for="title" class="col-md-1 control-label">სახელი</label>
             <div class="col-md-10">
-                <input type="text" name="title" class="form-control" id="title"
-                       placeholder="What is the title of your gallery" value="{{.Title}}">
+                <input type="text" name="title" class="form-control" id="title" placeholder="გალერიის სახელი" value="{{.Title}}">
             </div>
             <div class="col-md-1">
-                <button type="submit" class="btn btn-default">Save</button>
+                <button type="submit" class="btn btn-default">დამახსოვრება</button>
             </div>
         </div>
     </form>
@@ -57,9 +57,10 @@
 {{define "deleteGalleryForm"}}
 
     <form action="/galleries/{{.ID}}/delete" method="POST" class="form-horizontal">
+        {{csrfField}}
         <div class="form-group">
             <div class="col-md-10 col-md-offset-1">
-                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+                <button type="submit" class="btn btn-danger pull-right">გალერიის წაშლა</button>
             </div>
         </div>
     </form>
@@ -69,12 +70,13 @@
 {{define "uploadImageForm"}}
 
     <form action="/galleries/{{.ID}}/images" method="POST" enctype="multipart/form-data" class="form-horizontal">
+        {{csrfField}}
         <div class="form-group">
-            <label for="images" class="col-md-1 control-label">Add Photos</label>
+            <label for="images" class="col-md-1 control-label">აირჩიეთ ფოტო</label>
             <div class="col-md-10">
                 <input type="file" multiple="multiple" id="images" name="images">
                 <p class="help-block">choose wisely... &#x270d;</p>
-                <button type="submit" class="btn btn-default">Upload</button>
+                <button type="submit" class="btn btn-default">ატვირთვა</button>
             </div>
         </div>
     </form>
@@ -86,25 +88,23 @@
     {{range .ImagesSplitN 6}}
         <div class="col-md-2">
             {{range .}}
-                <a href="{{.}}">
-                    <img src="{{.}}" class="thumbnail">
+                <a href="{{.Path}}">
+                    <img src="{{.Path}}" class="thumbnail">
                 </a>
+
+                {{template "deleteImageForm" .}}
+
             {{end}}
         </div>
     {{end}}
-
-    <style>
-        .thumbnail {
-            width: 100%;
-        }
-    </style>
 
 {{end}}
 
 {{define "deleteImageForm"}}
 
     <form action="/galleries/{{.GalleryID}}/images/{{.Filename | urlquery}}/delete" method="POST">
-        <button type="submit" class="btn btn-default">Delete Image</button>
+        {{csrfField}}
+        <button type="submit" class="btn btn-default">ფოტოს წაშლა</button>
     </form>
 
 {{end}}

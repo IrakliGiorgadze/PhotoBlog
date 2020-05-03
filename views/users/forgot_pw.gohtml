@@ -1,13 +1,13 @@
 {{define "yield"}}
 
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">რეგისტრაცია</h3>
+                    <h3 class="panel-title">დაგავიწყდათ პაროლი?</h3>
                 </div>
                 <div class="panel-body">
-                    {{template "signupForm" .}}
+                    {{template "forgotPwForm" .}}
                 </div>
                 <div class="panel-footer">
                     <a href="/login">გაიარეთ ავტორიზაცია მომხმარებლის არსებობის შემთხვევაში</a>
@@ -18,23 +18,15 @@
 
 {{end}}
 
-{{define "signupForm"}}
+{{define "forgotPwForm"}}
 
-    <form action="/signup" method="POST">
+    <form action="/forgot" method="POST">
         {{csrfField}}
-        <div class="form-group">
-            <label for="name">სახელი</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Elon Musk" value="{{.Name}}">
-        </div>
         <div class="form-group">
             <label for="email">ელ. ფოსტა</label>
             <input type="email" name="email" class="form-control" id="email" placeholder="ai@jarvis.ge" value="{{.Email}}">
         </div>
-        <div class="form-group">
-            <label for="password">პაროლი</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="********">
-        </div>
-        <button type="submit" class="btn btn-primary">რეგისტრაცია</button>
+        <button type="submit" class="btn btn-primary">აღდგენა</button>
     </form>
 
 {{end}}
